@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Sparkles } from "lucide-react";
-import { StubPage } from "@/lib/publicPage";
+import { ServiceLandingPage } from "@/components/public/ServiceLandingPage";
 
 export const Route = createFileRoute("/holiday-packages")({
   head: () => ({
@@ -10,13 +10,18 @@ export const Route = createFileRoute("/holiday-packages")({
     ],
   }),
   component: () => (
-    <StubPage
+    <ServiceLandingPage
+      service="holiday"
       eyebrow="Holidays"
-      title={<>Trips worth the anticipation.</>}
+      title={<>Trips worth the <span className="text-gradient">anticipation</span>.</>}
       description="Every itinerary is designed around what you actually enjoy, then coordinated so nothing surprises you at the airport."
-      icon={<Sparkles className="h-6 w-6" />}
-      placeholderTitle="Package catalog coming soon."
-      placeholderDescription="Browsing and filtering across curated packages is being built in the next phase."
+      icon={<Sparkles className="h-3 w-3" />}
+      bullets={[
+        "Custom itineraries — never a rigid template",
+        "Curated stays, transfers and experiences",
+        "24/7 support while you're on the road",
+        "Transparent pricing with no markup surprises",
+      ]}
     />
   ),
 });

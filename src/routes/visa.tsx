@@ -1,22 +1,27 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Globe2 } from "lucide-react";
-import { StubPage } from "@/lib/publicPage";
+import { ServiceLandingPage } from "@/components/public/ServiceLandingPage";
 
 export const Route = createFileRoute("/visa")({
   head: () => ({
     meta: [
       { title: "Visa Assistance — Gateway Travels" },
-      { name: "description", content: "Guided documentation, checklists, and filing support." },
+      { name: "description", content: "Documentation, checklists, and filing support for your destination." },
     ],
   }),
   component: () => (
-    <StubPage
+    <ServiceLandingPage
+      service="visa"
       eyebrow="Visa"
-      title={<>Paperwork without the panic.</>}
-      description="From checklists to submission, we track every document and deadline so you don't have to."
-      icon={<Globe2 className="h-6 w-6" />}
-      placeholderTitle="Application tracker coming soon."
-      placeholderDescription="Country-specific requirements, document uploads, and status tracking are being built next."
+      title={<>Paperwork, <span className="text-gradient">handled</span>.</>}
+      description="From checklists to appointment slots, our specialists guide your visa filing end to end so nothing gets returned."
+      icon={<Globe2 className="h-3 w-3" />}
+      bullets={[
+        "Country-specific document checklists",
+        "Application form filling and review",
+        "Appointment scheduling where required",
+        "Tracking until your passport is back in hand",
+      ]}
     />
   ),
 });
