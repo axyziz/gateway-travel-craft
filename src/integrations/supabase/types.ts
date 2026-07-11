@@ -14,16 +14,245 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      activity_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          customer_id: string | null
+          enquiry_id: string | null
+          id: string
+          meta: Json
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          customer_id?: string | null
+          enquiry_id?: string | null
+          id?: string
+          meta?: Json
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          customer_id?: string | null
+          enquiry_id?: string | null
+          id?: string
+          meta?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_logs_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_logs_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "enquiries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      customers: {
+        Row: {
+          created_at: string
+          email: string | null
+          enquiry_count: number
+          first_enquiry_at: string | null
+          id: string
+          last_enquiry_at: string | null
+          name: string
+          notes: string | null
+          phone: string | null
+          updated_at: string
+          whatsapp: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          enquiry_count?: number
+          first_enquiry_at?: string | null
+          id?: string
+          last_enquiry_at?: string | null
+          name: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          enquiry_count?: number
+          first_enquiry_at?: string | null
+          id?: string
+          last_enquiry_at?: string | null
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      enquiries: {
+        Row: {
+          adults: number | null
+          assigned_to: string | null
+          children: number | null
+          created_at: string
+          customer_email: string | null
+          customer_id: string | null
+          customer_name: string
+          customer_phone: string | null
+          customer_whatsapp: string | null
+          details: Json
+          id: string
+          infants: number | null
+          message: string | null
+          priority: Database["public"]["Enums"]["enquiry_priority"]
+          reference: string
+          service_type: Database["public"]["Enums"]["enquiry_service"]
+          status: Database["public"]["Enums"]["enquiry_status"]
+          travel_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          adults?: number | null
+          assigned_to?: string | null
+          children?: number | null
+          created_at?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name: string
+          customer_phone?: string | null
+          customer_whatsapp?: string | null
+          details?: Json
+          id?: string
+          infants?: number | null
+          message?: string | null
+          priority?: Database["public"]["Enums"]["enquiry_priority"]
+          reference?: string
+          service_type: Database["public"]["Enums"]["enquiry_service"]
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          travel_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          adults?: number | null
+          assigned_to?: string | null
+          children?: number | null
+          created_at?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name?: string
+          customer_phone?: string | null
+          customer_whatsapp?: string | null
+          details?: Json
+          id?: string
+          infants?: number | null
+          message?: string | null
+          priority?: Database["public"]["Enums"]["enquiry_priority"]
+          reference?: string
+          service_type?: Database["public"]["Enums"]["enquiry_service"]
+          status?: Database["public"]["Enums"]["enquiry_status"]
+          travel_date?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enquiries_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "agent" | "viewer"
+      enquiry_priority: "low" | "normal" | "high"
+      enquiry_service:
+        | "flight"
+        | "hotel"
+        | "visa"
+        | "holiday"
+        | "bus"
+        | "vehicle"
+      enquiry_status:
+        | "new"
+        | "in_progress"
+        | "quoted"
+        | "confirmed"
+        | "completed"
+        | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +379,18 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "agent", "viewer"],
+      enquiry_priority: ["low", "normal", "high"],
+      enquiry_service: ["flight", "hotel", "visa", "holiday", "bus", "vehicle"],
+      enquiry_status: [
+        "new",
+        "in_progress",
+        "quoted",
+        "confirmed",
+        "completed",
+        "cancelled",
+      ],
+    },
   },
 } as const
