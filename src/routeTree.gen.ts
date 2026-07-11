@@ -9,19 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VisaRouteImport } from './routes/visa'
-import { Route as VehicleRentalRouteImport } from './routes/vehicle-rental'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as HotelRequestsRouteImport } from './routes/hotel-requests'
-import { Route as HolidayPackagesRouteImport } from './routes/holiday-packages'
-import { Route as FlightQuoteRouteImport } from './routes/flight-quote'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as BusBookingRouteImport } from './routes/bus-booking'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -29,16 +22,6 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminProfileRouteImport } from './routes/_authenticated/admin.profile'
 
-const VisaRoute = VisaRouteImport.update({
-  id: '/visa',
-  path: '/visa',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const VehicleRentalRoute = VehicleRentalRouteImport.update({
-  id: '/vehicle-rental',
-  path: '/vehicle-rental',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -59,39 +42,14 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HotelRequestsRoute = HotelRequestsRouteImport.update({
-  id: '/hotel-requests',
-  path: '/hotel-requests',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HolidayPackagesRoute = HolidayPackagesRouteImport.update({
-  id: '/holiday-packages',
-  path: '/holiday-packages',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FlightQuoteRoute = FlightQuoteRouteImport.update({
-  id: '/flight-quote',
-  path: '/flight-quote',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BusBookingRoute = BusBookingRouteImport.update({
-  id: '/bus-booking',
-  path: '/bus-booking',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -128,19 +86,12 @@ const AuthenticatedAdminProfileRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/bus-booking': typeof BusBookingRoute
   '/contact': typeof ContactRoute
-  '/flight-quote': typeof FlightQuoteRoute
-  '/holiday-packages': typeof HolidayPackagesRoute
-  '/hotel-requests': typeof HotelRequestsRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
-  '/vehicle-rental': typeof VehicleRentalRoute
-  '/visa': typeof VisaRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/profile': typeof AuthenticatedAdminProfileRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
@@ -148,19 +99,12 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/bus-booking': typeof BusBookingRoute
   '/contact': typeof ContactRoute
-  '/flight-quote': typeof FlightQuoteRoute
-  '/holiday-packages': typeof HolidayPackagesRoute
-  '/hotel-requests': typeof HotelRequestsRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
-  '/vehicle-rental': typeof VehicleRentalRoute
-  '/visa': typeof VisaRoute
   '/admin/profile': typeof AuthenticatedAdminProfileRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
@@ -169,19 +113,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
-  '/bus-booking': typeof BusBookingRoute
   '/contact': typeof ContactRoute
-  '/flight-quote': typeof FlightQuoteRoute
-  '/holiday-packages': typeof HolidayPackagesRoute
-  '/hotel-requests': typeof HotelRequestsRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
-  '/vehicle-rental': typeof VehicleRentalRoute
-  '/visa': typeof VisaRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/profile': typeof AuthenticatedAdminProfileRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
@@ -191,19 +128,12 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/about'
     | '/auth'
-    | '/bus-booking'
     | '/contact'
-    | '/flight-quote'
-    | '/holiday-packages'
-    | '/hotel-requests'
     | '/privacy'
     | '/services'
     | '/sitemap.xml'
     | '/terms'
-    | '/vehicle-rental'
-    | '/visa'
     | '/admin'
     | '/admin/profile'
     | '/admin/settings'
@@ -211,19 +141,12 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
     | '/auth'
-    | '/bus-booking'
     | '/contact'
-    | '/flight-quote'
-    | '/holiday-packages'
-    | '/hotel-requests'
     | '/privacy'
     | '/services'
     | '/sitemap.xml'
     | '/terms'
-    | '/vehicle-rental'
-    | '/visa'
     | '/admin/profile'
     | '/admin/settings'
     | '/admin'
@@ -231,19 +154,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
-    | '/about'
     | '/auth'
-    | '/bus-booking'
     | '/contact'
-    | '/flight-quote'
-    | '/holiday-packages'
-    | '/hotel-requests'
     | '/privacy'
     | '/services'
     | '/sitemap.xml'
     | '/terms'
-    | '/vehicle-rental'
-    | '/visa'
     | '/_authenticated/admin'
     | '/_authenticated/admin/profile'
     | '/_authenticated/admin/settings'
@@ -253,37 +169,16 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
-  BusBookingRoute: typeof BusBookingRoute
   ContactRoute: typeof ContactRoute
-  FlightQuoteRoute: typeof FlightQuoteRoute
-  HolidayPackagesRoute: typeof HolidayPackagesRoute
-  HotelRequestsRoute: typeof HotelRequestsRoute
   PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
-  VehicleRentalRoute: typeof VehicleRentalRoute
-  VisaRoute: typeof VisaRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/visa': {
-      id: '/visa'
-      path: '/visa'
-      fullPath: '/visa'
-      preLoaderRoute: typeof VisaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/vehicle-rental': {
-      id: '/vehicle-rental'
-      path: '/vehicle-rental'
-      fullPath: '/vehicle-rental'
-      preLoaderRoute: typeof VehicleRentalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -312,27 +207,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/hotel-requests': {
-      id: '/hotel-requests'
-      path: '/hotel-requests'
-      fullPath: '/hotel-requests'
-      preLoaderRoute: typeof HotelRequestsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/holiday-packages': {
-      id: '/holiday-packages'
-      path: '/holiday-packages'
-      fullPath: '/holiday-packages'
-      preLoaderRoute: typeof HolidayPackagesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/flight-quote': {
-      id: '/flight-quote'
-      path: '/flight-quote'
-      fullPath: '/flight-quote'
-      preLoaderRoute: typeof FlightQuoteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -340,25 +214,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/bus-booking': {
-      id: '/bus-booking'
-      path: '/bus-booking'
-      fullPath: '/bus-booking'
-      preLoaderRoute: typeof BusBookingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -435,19 +295,12 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
-  BusBookingRoute: BusBookingRoute,
   ContactRoute: ContactRoute,
-  FlightQuoteRoute: FlightQuoteRoute,
-  HolidayPackagesRoute: HolidayPackagesRoute,
-  HotelRequestsRoute: HotelRequestsRoute,
   PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
-  VehicleRentalRoute: VehicleRentalRoute,
-  VisaRoute: VisaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
