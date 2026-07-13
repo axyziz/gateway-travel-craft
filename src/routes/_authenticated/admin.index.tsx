@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Users, Inbox, Clock, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, Users, Inbox, Clock, CheckCircle2, FileText, Briefcase, Receipt, Wallet } from "lucide-react";
 import { AdminPageHeader } from "@/components/layouts/AdminLayout";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { SERVICE_LABELS, STATUS_COLORS, STATUS_LABELS } from "@/lib/enquiries";
+import { formatMoney, PAYMENT_METHOD } from "@/lib/business";
 import { formatDistanceToNow } from "date-fns";
 
 export const Route = createFileRoute("/_authenticated/admin/")({
@@ -23,17 +24,27 @@ function Dashboard() {
     queryKey: ["admin", "dashboard-stats"],
     queryFn: async () => {
       const startOfDay = new Date(); startOfDay.setHours(0, 0, 0, 0);
-      const [customers, today, pending, completed] = await Promise.all([
+      const [customers, today, pending, completed, quoTotal, quoPending, bookConf, invPending, todayPayments] = await Promise.all([
         supabase.from("customers").select("id", { count: "exact", head: true }),
         supabase.from("enquiries").select("id", { count: "exact", head: true }).gte("created_at", startOfDay.toISOString()),
         supabase.from("enquiries").select("id", { count: "exact", head: true }).in("status", ["new", "in_progress", "quoted"]),
         supabase.from("enquiries").select("id", { count: "exact", head: true }).in("status", ["completed", "confirmed"]),
+        supabase.from("quotations").select("id", { count: "exact", head: true }),
+        supabase.from("quotations").select("id", { count: "exact", head: true }).in("status", ["draft", "sent"]),
+        supabase.from("bookings").select("id", { count: "exact", head: true }).in("status", ["confirmed", "issued"]),
+        supabase.from("invoices").select("id", { count: "exact", head: true }).in("status", ["draft", "pending"]),
+        supabase.from("payments").select("amount").gte("payment_date", startOfDay.toISOString().slice(0, 10)),
       ]);
       return {
         customers: customers.count ?? 0,
         today: today.count ?? 0,
         pending: pending.count ?? 0,
         completed: completed.count ?? 0,
+        quoTotal: quoTotal.count ?? 0,
+        quoPending: quoPending.count ?? 0,
+        bookConf: bookConf.count ?? 0,
+        invPending: invPending.count ?? 0,
+        todayRevenue: (todayPayments.data ?? []).reduce((s, p) => s + Number(p.amount), 0),
       };
     },
   });
@@ -48,11 +59,22 @@ function Dashboard() {
     },
   });
 
+  const { data: recentPayments } = useQuery({
+    queryKey: ["admin", "recent-payments"],
+    queryFn: async () => (await supabase.from("payments")
+      .select("id, reference, amount, method, payment_date, invoices(reference, customer_name)")
+      .order("payment_date", { ascending: false }).limit(6)).data ?? [],
+  });
+
   const cards = [
     { label: "Total customers", value: stats?.customers, icon: Users },
     { label: "Today's enquiries", value: stats?.today, icon: Inbox },
     { label: "Pending enquiries", value: stats?.pending, icon: Clock },
     { label: "Completed enquiries", value: stats?.completed, icon: CheckCircle2 },
+    { label: "Total quotations", value: stats?.quoTotal, icon: FileText },
+    { label: "Pending quotations", value: stats?.quoPending, icon: FileText },
+    { label: "Confirmed bookings", value: stats?.bookConf, icon: Briefcase },
+    { label: "Invoices pending", value: stats?.invPending, icon: Receipt },
   ];
 
   return (
@@ -107,6 +129,42 @@ function Dashboard() {
                 </Link>
               ))
             )}
+          </div>
+        </Card>
+      </div>
+
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <Card className="p-6 border-border/60">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold tracking-tight">Today's revenue</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Payments recorded today.</p>
+            </div>
+            <span className="grid place-items-center h-9 w-9 rounded-lg bg-accent text-primary"><Wallet className="h-4 w-4" /></span>
+          </div>
+          <p className="mt-6 text-4xl font-semibold tracking-tight tabular-nums">
+            {isLoading ? <Skeleton className="h-10 w-40" /> : formatMoney(stats?.todayRevenue ?? 0)}
+          </p>
+        </Card>
+        <Card className="p-6 border-border/60">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold tracking-tight">Recent payments</h2>
+            </div>
+            <Link to="/admin/payments" className="text-sm text-primary font-medium hover:underline">View all →</Link>
+          </div>
+          <div className="mt-4 divide-y divide-border/60">
+            {(recentPayments ?? []).length === 0 ? (
+              <p className="py-8 text-center text-sm text-muted-foreground">No payments recorded yet.</p>
+            ) : recentPayments!.map((p) => (
+              <div key={p.id} className="flex items-center gap-3 py-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">{p.invoices?.customer_name ?? p.reference}</p>
+                  <p className="text-xs text-muted-foreground">{PAYMENT_METHOD[p.method]} · {formatDistanceToNow(new Date(p.payment_date), { addSuffix: true })}</p>
+                </div>
+                <p className="text-sm font-medium tabular-nums">{formatMoney(p.amount)}</p>
+              </div>
+            ))}
           </div>
         </Card>
       </div>

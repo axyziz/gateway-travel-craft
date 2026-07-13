@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { ArrowLeft, User, Mail, Phone, MessageSquare, Calendar, Users2 } from "lucide-react";
+import { ArrowLeft, User, Mail, Phone, MessageSquare, Calendar, Users2, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { AdminPageHeader } from "@/components/layouts/AdminLayout";
 import { Card } from "@/components/ui/card";
@@ -20,6 +20,7 @@ export const Route = createFileRoute("/_authenticated/admin/enquiries/$id")({
 function EnquiryDetail() {
   const { id } = Route.useParams();
   const qc = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: enquiry, isLoading } = useQuery({
     queryKey: ["enquiry", id],
@@ -72,6 +73,31 @@ function EnquiryDetail() {
     onError: () => toast.error("Could not assign"),
   });
 
+  const convertToQuotation = useMutation({
+    mutationFn: async () => {
+      if (!enquiry) throw new Error("no enquiry");
+      const { data, error } = await supabase.from("quotations").insert({
+        enquiry_id: enquiry.id,
+        customer_id: enquiry.customer_id,
+        customer_name: enquiry.customer_name,
+        customer_email: enquiry.customer_email,
+        customer_phone: enquiry.customer_phone,
+        status: "draft",
+      }).select("id").single();
+      if (error) throw error;
+      await supabase.from("quotation_items").insert({
+        quotation_id: data.id,
+        service_type: enquiry.service_type,
+        description: `${SERVICE_LABELS[enquiry.service_type as keyof typeof SERVICE_LABELS]}${enquiry.travel_date ? ` — travel ${enquiry.travel_date}` : ""}`,
+        quantity: 1, unit_price: 0, discount: 0, total: 0, position: 0,
+      });
+      await supabase.from("enquiries").update({ status: "quoted" as never }).eq("id", id);
+      return data;
+    },
+    onSuccess: (row) => { toast.success("Quotation created"); navigate({ to: "/admin/quotations/$id", params: { id: row.id } }); },
+    onError: () => toast.error("Convert failed"),
+  });
+
   if (isLoading || !enquiry) {
     return <div className="space-y-4"><Skeleton className="h-8 w-64" /><Skeleton className="h-64 w-full" /></div>;
   }
@@ -87,7 +113,10 @@ function EnquiryDetail() {
         title={enquiry.reference}
         description={`${SERVICE_LABELS[enquiry.service_type as keyof typeof SERVICE_LABELS]} enquiry from ${enquiry.customer_name}`}
         actions={
-          <Badge variant="outline" className={`border ${STATUS_COLORS[enquiry.status] ?? ""}`}>{STATUS_LABELS[enquiry.status] ?? enquiry.status}</Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className={`border ${STATUS_COLORS[enquiry.status] ?? ""}`}>{STATUS_LABELS[enquiry.status] ?? enquiry.status}</Badge>
+            <Button size="sm" onClick={() => convertToQuotation.mutate()} disabled={convertToQuotation.isPending}><FileText className="h-4 w-4" /> Convert to quotation</Button>
+          </div>
         }
       />
       <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
