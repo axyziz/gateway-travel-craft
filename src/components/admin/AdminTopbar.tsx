@@ -1,8 +1,9 @@
 import { Bell, Moon, Sun, Search, LogOut, User as UserIcon, Settings } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { GlobalSearch } from "@/components/admin/GlobalSearch";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,14 @@ export function AdminTopbar() {
   const { theme, setTheme } = useTheme();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const [searchOpen, setSearchOpen] = useState(false);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setSearchOpen((v) => !v); }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   const initials =
     (user?.user_metadata?.full_name as string | undefined)?.slice(0, 2).toUpperCase() ??
     user?.email?.slice(0, 2).toUpperCase() ??
@@ -26,10 +35,14 @@ export function AdminTopbar() {
 
   return (
     <header className="h-16 shrink-0 flex items-center gap-3 px-4 sm:px-6 border-b border-border bg-background/80 backdrop-blur-xl sticky top-0 z-30">
-      <div className="relative flex-1 max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input placeholder="Search…" className="pl-9 h-9 bg-muted/40 border-transparent focus-visible:bg-background" />
-      </div>
+      <button
+        onClick={() => setSearchOpen(true)}
+        className="relative flex-1 max-w-md flex items-center gap-2 h-9 px-3 rounded-md bg-muted/40 border border-transparent hover:bg-muted/60 text-left text-sm text-muted-foreground transition-colors"
+      >
+        <Search className="h-4 w-4" />
+        <span className="flex-1">Search customers, quotations, invoices…</span>
+        <kbd className="hidden sm:inline text-[10px] font-mono px-1.5 py-0.5 rounded border border-border bg-background/60">⌘K</kbd>
+      </button>
       <div className="ml-auto flex items-center gap-1">
         <Button
           variant="ghost"
@@ -76,6 +89,7 @@ export function AdminTopbar() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   );
 }
