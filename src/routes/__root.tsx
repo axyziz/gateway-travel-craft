@@ -80,13 +80,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Gateway Travels — Modern Travel CRM" },
-      { name: "description", content: "Gateway Travels: enterprise Travel CRM and premium travel services. Flights, holidays, hotels, visas, transport." },
+      { title: "Gateway Travels — Enterprise Travel CRM & Concierge" },
+      { name: "description", content: "Premium travel services and an enterprise CRM in one workspace. Flights, hotels, holidays, visas, transport — coordinated end to end." },
       { name: "author", content: "Gateway Travels" },
-      { property: "og:title", content: "Gateway Travels — Modern Travel CRM" },
-      { property: "og:description", content: "Enterprise Travel CRM and premium travel services." },
+      { property: "og:title", content: "Gateway Travels — Enterprise Travel CRM & Concierge" },
+      { property: "og:description", content: "Premium travel services and an enterprise CRM in one workspace. Flights, hotels, holidays, visas, transport — coordinated end to end." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Gateway Travels — Enterprise Travel CRM & Concierge" },
+      { name: "twitter:description", content: "Premium travel services and an enterprise CRM in one workspace. Flights, hotels, holidays, visas, transport — coordinated end to end." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0d66e8c3-9c34-4ab9-85c5-2f759633958a/id-preview-7a9072f7--abf11787-e267-4e35-9a68-8c2abd199fa9.lovable.app-1783798518135.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0d66e8c3-9c34-4ab9-85c5-2f759633958a/id-preview-7a9072f7--abf11787-e267-4e35-9a68-8c2abd199fa9.lovable.app-1783798518135.png" },
     ],
     links: [
       {

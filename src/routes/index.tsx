@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
       { title: "Gateway Travels — Enterprise Travel CRM & Concierge" },
       { name: "description", content: "Premium travel services and an enterprise CRM in one workspace. Flights, hotels, holidays, visas, transport — coordinated end to end." },
       { property: "og:title", content: "Gateway Travels — Enterprise Travel CRM & Concierge" },
-      { property: "og:description", content: "Premium travel services and an enterprise CRM in one workspace." },
+      { property: "og:description", content: "Premium travel services and an enterprise CRM in one workspace. Flights, hotels, holidays, visas, transport — coordinated end to end." },
     ],
   }),
   component: Home,
