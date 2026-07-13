@@ -59,6 +59,84 @@ export type Database = {
           },
         ]
       }
+      bookings: {
+        Row: {
+          airline: string | null
+          amount: number
+          booking_date: string
+          created_at: string
+          created_by: string | null
+          customer_id: string | null
+          customer_name: string
+          id: string
+          pnr: string | null
+          quotation_id: string | null
+          reference: string
+          remarks: string | null
+          service_type: Database["public"]["Enums"]["enquiry_service"] | null
+          status: Database["public"]["Enums"]["booking_status"]
+          supplier: string | null
+          ticket_number: string | null
+          travel_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          airline?: string | null
+          amount?: number
+          booking_date?: string
+          created_at?: string
+          created_by?: string | null
+          customer_id?: string | null
+          customer_name: string
+          id?: string
+          pnr?: string | null
+          quotation_id?: string | null
+          reference?: string
+          remarks?: string | null
+          service_type?: Database["public"]["Enums"]["enquiry_service"] | null
+          status?: Database["public"]["Enums"]["booking_status"]
+          supplier?: string | null
+          ticket_number?: string | null
+          travel_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          airline?: string | null
+          amount?: number
+          booking_date?: string
+          created_at?: string
+          created_by?: string | null
+          customer_id?: string | null
+          customer_name?: string
+          id?: string
+          pnr?: string | null
+          quotation_id?: string | null
+          reference?: string
+          remarks?: string | null
+          service_type?: Database["public"]["Enums"]["enquiry_service"] | null
+          status?: Database["public"]["Enums"]["booking_status"]
+          supplier?: string | null
+          ticket_number?: string | null
+          travel_date?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_quotation_id_fkey"
+            columns: ["quotation_id"]
+            isOneToOne: false
+            referencedRelation: "quotations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customers: {
         Row: {
           created_at: string
@@ -175,6 +253,213 @@ export type Database = {
           },
         ]
       }
+      invoice_items: {
+        Row: {
+          created_at: string
+          description: string
+          discount: number
+          id: string
+          invoice_id: string
+          position: number
+          quantity: number
+          service_type: Database["public"]["Enums"]["enquiry_service"] | null
+          total: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          discount?: number
+          id?: string
+          invoice_id: string
+          position?: number
+          quantity?: number
+          service_type?: Database["public"]["Enums"]["enquiry_service"] | null
+          total?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          discount?: number
+          id?: string
+          invoice_id?: string
+          position?: number
+          quantity?: number
+          service_type?: Database["public"]["Enums"]["enquiry_service"] | null
+          total?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_items_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoices: {
+        Row: {
+          amount_paid: number
+          booking_id: string | null
+          created_at: string
+          created_by: string | null
+          currency: string
+          customer_email: string | null
+          customer_id: string | null
+          customer_name: string
+          customer_phone: string | null
+          discount: number
+          due_date: string | null
+          id: string
+          issue_date: string
+          notes: string | null
+          quotation_id: string | null
+          reference: string
+          status: Database["public"]["Enums"]["invoice_status"]
+          subtotal: number
+          tax: number
+          terms: string | null
+          total: number
+          updated_at: string
+        }
+        Insert: {
+          amount_paid?: number
+          booking_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name: string
+          customer_phone?: string | null
+          discount?: number
+          due_date?: string | null
+          id?: string
+          issue_date?: string
+          notes?: string | null
+          quotation_id?: string | null
+          reference?: string
+          status?: Database["public"]["Enums"]["invoice_status"]
+          subtotal?: number
+          tax?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+        }
+        Update: {
+          amount_paid?: number
+          booking_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name?: string
+          customer_phone?: string | null
+          discount?: number
+          due_date?: string | null
+          id?: string
+          issue_date?: string
+          notes?: string | null
+          quotation_id?: string | null
+          reference?: string
+          status?: Database["public"]["Enums"]["invoice_status"]
+          subtotal?: number
+          tax?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoices_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoices_quotation_id_fkey"
+            columns: ["quotation_id"]
+            isOneToOne: false
+            referencedRelation: "quotations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          created_by: string | null
+          customer_id: string | null
+          external_reference: string | null
+          id: string
+          invoice_id: string | null
+          method: Database["public"]["Enums"]["payment_method"]
+          notes: string | null
+          payment_date: string
+          reference: string
+          status: Database["public"]["Enums"]["payment_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          customer_id?: string | null
+          external_reference?: string | null
+          id?: string
+          invoice_id?: string | null
+          method?: Database["public"]["Enums"]["payment_method"]
+          notes?: string | null
+          payment_date?: string
+          reference?: string
+          status?: Database["public"]["Enums"]["payment_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          created_by?: string | null
+          customer_id?: string | null
+          external_reference?: string | null
+          id?: string
+          invoice_id?: string | null
+          method?: Database["public"]["Enums"]["payment_method"]
+          notes?: string | null
+          payment_date?: string
+          reference?: string
+          status?: Database["public"]["Enums"]["payment_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -202,6 +487,137 @@ export type Database = {
         }
         Relationships: []
       }
+      quotation_items: {
+        Row: {
+          created_at: string
+          description: string
+          discount: number
+          id: string
+          position: number
+          quantity: number
+          quotation_id: string
+          service_type: Database["public"]["Enums"]["enquiry_service"]
+          total: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          discount?: number
+          id?: string
+          position?: number
+          quantity?: number
+          quotation_id: string
+          service_type: Database["public"]["Enums"]["enquiry_service"]
+          total?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          discount?: number
+          id?: string
+          position?: number
+          quantity?: number
+          quotation_id?: string
+          service_type?: Database["public"]["Enums"]["enquiry_service"]
+          total?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quotation_items_quotation_id_fkey"
+            columns: ["quotation_id"]
+            isOneToOne: false
+            referencedRelation: "quotations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quotations: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          currency: string
+          customer_email: string | null
+          customer_id: string | null
+          customer_name: string
+          customer_phone: string | null
+          discount: number
+          enquiry_id: string | null
+          id: string
+          issue_date: string
+          notes: string | null
+          reference: string
+          status: Database["public"]["Enums"]["quotation_status"]
+          subtotal: number
+          tax: number
+          terms: string | null
+          total: number
+          updated_at: string
+          valid_until: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name: string
+          customer_phone?: string | null
+          discount?: number
+          enquiry_id?: string | null
+          id?: string
+          issue_date?: string
+          notes?: string | null
+          reference?: string
+          status?: Database["public"]["Enums"]["quotation_status"]
+          subtotal?: number
+          tax?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+          valid_until?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          currency?: string
+          customer_email?: string | null
+          customer_id?: string | null
+          customer_name?: string
+          customer_phone?: string | null
+          discount?: number
+          enquiry_id?: string | null
+          id?: string
+          issue_date?: string
+          notes?: string | null
+          reference?: string
+          status?: Database["public"]["Enums"]["quotation_status"]
+          subtotal?: number
+          tax?: number
+          terms?: string | null
+          total?: number
+          updated_at?: string
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quotations_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quotations_enquiry_id_fkey"
+            columns: ["enquiry_id"]
+            isOneToOne: false
+            referencedRelation: "enquiries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           created_at: string
@@ -228,6 +644,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      gen_ref: { Args: { prefix: string; seq: unknown }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -238,6 +655,12 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "agent" | "viewer"
+      booking_status:
+        | "pending"
+        | "confirmed"
+        | "issued"
+        | "completed"
+        | "cancelled"
       enquiry_priority: "low" | "normal" | "high"
       enquiry_service:
         | "flight"
@@ -252,6 +675,16 @@ export type Database = {
         | "quoted"
         | "confirmed"
         | "completed"
+        | "cancelled"
+      invoice_status: "draft" | "pending" | "paid" | "cancelled"
+      payment_method: "cash" | "upi" | "bank_transfer" | "card" | "other"
+      payment_status: "pending" | "partial" | "paid" | "refunded"
+      quotation_status:
+        | "draft"
+        | "sent"
+        | "accepted"
+        | "rejected"
+        | "expired"
         | "cancelled"
     }
     CompositeTypes: {
@@ -381,6 +814,13 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "agent", "viewer"],
+      booking_status: [
+        "pending",
+        "confirmed",
+        "issued",
+        "completed",
+        "cancelled",
+      ],
       enquiry_priority: ["low", "normal", "high"],
       enquiry_service: ["flight", "hotel", "visa", "holiday", "bus", "vehicle"],
       enquiry_status: [
@@ -389,6 +829,17 @@ export const Constants = {
         "quoted",
         "confirmed",
         "completed",
+        "cancelled",
+      ],
+      invoice_status: ["draft", "pending", "paid", "cancelled"],
+      payment_method: ["cash", "upi", "bank_transfer", "card", "other"],
+      payment_status: ["pending", "partial", "paid", "refunded"],
+      quotation_status: [
+        "draft",
+        "sent",
+        "accepted",
+        "rejected",
+        "expired",
         "cancelled",
       ],
     },

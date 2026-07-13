@@ -28,10 +28,17 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminProfileRouteImport } from './routes/_authenticated/admin.profile'
+import { Route as AuthenticatedAdminQuotationsIndexRouteImport } from './routes/_authenticated/admin.quotations.index'
+import { Route as AuthenticatedAdminPaymentsIndexRouteImport } from './routes/_authenticated/admin.payments.index'
+import { Route as AuthenticatedAdminInvoicesIndexRouteImport } from './routes/_authenticated/admin.invoices.index'
 import { Route as AuthenticatedAdminEnquiriesIndexRouteImport } from './routes/_authenticated/admin.enquiries.index'
 import { Route as AuthenticatedAdminCustomersIndexRouteImport } from './routes/_authenticated/admin.customers.index'
+import { Route as AuthenticatedAdminBookingsIndexRouteImport } from './routes/_authenticated/admin.bookings.index'
+import { Route as AuthenticatedAdminQuotationsIdRouteImport } from './routes/_authenticated/admin.quotations.$id'
+import { Route as AuthenticatedAdminInvoicesIdRouteImport } from './routes/_authenticated/admin.invoices.$id'
 import { Route as AuthenticatedAdminEnquiriesIdRouteImport } from './routes/_authenticated/admin.enquiries.$id'
 import { Route as AuthenticatedAdminCustomersIdRouteImport } from './routes/_authenticated/admin.customers.$id'
+import { Route as AuthenticatedAdminBookingsIdRouteImport } from './routes/_authenticated/admin.bookings.$id'
 
 const VisaRoute = VisaRouteImport.update({
   id: '/visa',
@@ -129,6 +136,24 @@ const AuthenticatedAdminProfileRoute =
     path: '/profile',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminQuotationsIndexRoute =
+  AuthenticatedAdminQuotationsIndexRouteImport.update({
+    id: '/quotations/',
+    path: '/quotations/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminPaymentsIndexRoute =
+  AuthenticatedAdminPaymentsIndexRouteImport.update({
+    id: '/payments/',
+    path: '/payments/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminInvoicesIndexRoute =
+  AuthenticatedAdminInvoicesIndexRouteImport.update({
+    id: '/invoices/',
+    path: '/invoices/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminEnquiriesIndexRoute =
   AuthenticatedAdminEnquiriesIndexRouteImport.update({
     id: '/enquiries/',
@@ -141,6 +166,24 @@ const AuthenticatedAdminCustomersIndexRoute =
     path: '/customers/',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminBookingsIndexRoute =
+  AuthenticatedAdminBookingsIndexRouteImport.update({
+    id: '/bookings/',
+    path: '/bookings/',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminQuotationsIdRoute =
+  AuthenticatedAdminQuotationsIdRouteImport.update({
+    id: '/quotations/$id',
+    path: '/quotations/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminInvoicesIdRoute =
+  AuthenticatedAdminInvoicesIdRouteImport.update({
+    id: '/invoices/$id',
+    path: '/invoices/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminEnquiriesIdRoute =
   AuthenticatedAdminEnquiriesIdRouteImport.update({
     id: '/enquiries/$id',
@@ -151,6 +194,12 @@ const AuthenticatedAdminCustomersIdRoute =
   AuthenticatedAdminCustomersIdRouteImport.update({
     id: '/customers/$id',
     path: '/customers/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBookingsIdRoute =
+  AuthenticatedAdminBookingsIdRouteImport.update({
+    id: '/bookings/$id',
+    path: '/bookings/$id',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 
@@ -173,10 +222,17 @@ export interface FileRoutesByFullPath {
   '/admin/profile': typeof AuthenticatedAdminProfileRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/bookings/$id': typeof AuthenticatedAdminBookingsIdRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/admin/enquiries/$id': typeof AuthenticatedAdminEnquiriesIdRoute
+  '/admin/invoices/$id': typeof AuthenticatedAdminInvoicesIdRoute
+  '/admin/quotations/$id': typeof AuthenticatedAdminQuotationsIdRoute
+  '/admin/bookings/': typeof AuthenticatedAdminBookingsIndexRoute
   '/admin/customers/': typeof AuthenticatedAdminCustomersIndexRoute
   '/admin/enquiries/': typeof AuthenticatedAdminEnquiriesIndexRoute
+  '/admin/invoices/': typeof AuthenticatedAdminInvoicesIndexRoute
+  '/admin/payments/': typeof AuthenticatedAdminPaymentsIndexRoute
+  '/admin/quotations/': typeof AuthenticatedAdminQuotationsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -196,10 +252,17 @@ export interface FileRoutesByTo {
   '/admin/profile': typeof AuthenticatedAdminProfileRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/bookings/$id': typeof AuthenticatedAdminBookingsIdRoute
   '/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/admin/enquiries/$id': typeof AuthenticatedAdminEnquiriesIdRoute
+  '/admin/invoices/$id': typeof AuthenticatedAdminInvoicesIdRoute
+  '/admin/quotations/$id': typeof AuthenticatedAdminQuotationsIdRoute
+  '/admin/bookings': typeof AuthenticatedAdminBookingsIndexRoute
   '/admin/customers': typeof AuthenticatedAdminCustomersIndexRoute
   '/admin/enquiries': typeof AuthenticatedAdminEnquiriesIndexRoute
+  '/admin/invoices': typeof AuthenticatedAdminInvoicesIndexRoute
+  '/admin/payments': typeof AuthenticatedAdminPaymentsIndexRoute
+  '/admin/quotations': typeof AuthenticatedAdminQuotationsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -222,10 +285,17 @@ export interface FileRoutesById {
   '/_authenticated/admin/profile': typeof AuthenticatedAdminProfileRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/bookings/$id': typeof AuthenticatedAdminBookingsIdRoute
   '/_authenticated/admin/customers/$id': typeof AuthenticatedAdminCustomersIdRoute
   '/_authenticated/admin/enquiries/$id': typeof AuthenticatedAdminEnquiriesIdRoute
+  '/_authenticated/admin/invoices/$id': typeof AuthenticatedAdminInvoicesIdRoute
+  '/_authenticated/admin/quotations/$id': typeof AuthenticatedAdminQuotationsIdRoute
+  '/_authenticated/admin/bookings/': typeof AuthenticatedAdminBookingsIndexRoute
   '/_authenticated/admin/customers/': typeof AuthenticatedAdminCustomersIndexRoute
   '/_authenticated/admin/enquiries/': typeof AuthenticatedAdminEnquiriesIndexRoute
+  '/_authenticated/admin/invoices/': typeof AuthenticatedAdminInvoicesIndexRoute
+  '/_authenticated/admin/payments/': typeof AuthenticatedAdminPaymentsIndexRoute
+  '/_authenticated/admin/quotations/': typeof AuthenticatedAdminQuotationsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -248,10 +318,17 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/admin/settings'
     | '/admin/'
+    | '/admin/bookings/$id'
     | '/admin/customers/$id'
     | '/admin/enquiries/$id'
+    | '/admin/invoices/$id'
+    | '/admin/quotations/$id'
+    | '/admin/bookings/'
     | '/admin/customers/'
     | '/admin/enquiries/'
+    | '/admin/invoices/'
+    | '/admin/payments/'
+    | '/admin/quotations/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -271,10 +348,17 @@ export interface FileRouteTypes {
     | '/admin/profile'
     | '/admin/settings'
     | '/admin'
+    | '/admin/bookings/$id'
     | '/admin/customers/$id'
     | '/admin/enquiries/$id'
+    | '/admin/invoices/$id'
+    | '/admin/quotations/$id'
+    | '/admin/bookings'
     | '/admin/customers'
     | '/admin/enquiries'
+    | '/admin/invoices'
+    | '/admin/payments'
+    | '/admin/quotations'
   id:
     | '__root__'
     | '/'
@@ -296,10 +380,17 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/profile'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/'
+    | '/_authenticated/admin/bookings/$id'
     | '/_authenticated/admin/customers/$id'
     | '/_authenticated/admin/enquiries/$id'
+    | '/_authenticated/admin/invoices/$id'
+    | '/_authenticated/admin/quotations/$id'
+    | '/_authenticated/admin/bookings/'
     | '/_authenticated/admin/customers/'
     | '/_authenticated/admin/enquiries/'
+    | '/_authenticated/admin/invoices/'
+    | '/_authenticated/admin/payments/'
+    | '/_authenticated/admin/quotations/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -455,6 +546,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminProfileRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/quotations/': {
+      id: '/_authenticated/admin/quotations/'
+      path: '/quotations'
+      fullPath: '/admin/quotations/'
+      preLoaderRoute: typeof AuthenticatedAdminQuotationsIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/payments/': {
+      id: '/_authenticated/admin/payments/'
+      path: '/payments'
+      fullPath: '/admin/payments/'
+      preLoaderRoute: typeof AuthenticatedAdminPaymentsIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/invoices/': {
+      id: '/_authenticated/admin/invoices/'
+      path: '/invoices'
+      fullPath: '/admin/invoices/'
+      preLoaderRoute: typeof AuthenticatedAdminInvoicesIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/enquiries/': {
       id: '/_authenticated/admin/enquiries/'
       path: '/enquiries'
@@ -467,6 +579,27 @@ declare module '@tanstack/react-router' {
       path: '/customers'
       fullPath: '/admin/customers/'
       preLoaderRoute: typeof AuthenticatedAdminCustomersIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/bookings/': {
+      id: '/_authenticated/admin/bookings/'
+      path: '/bookings'
+      fullPath: '/admin/bookings/'
+      preLoaderRoute: typeof AuthenticatedAdminBookingsIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/quotations/$id': {
+      id: '/_authenticated/admin/quotations/$id'
+      path: '/quotations/$id'
+      fullPath: '/admin/quotations/$id'
+      preLoaderRoute: typeof AuthenticatedAdminQuotationsIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/invoices/$id': {
+      id: '/_authenticated/admin/invoices/$id'
+      path: '/invoices/$id'
+      fullPath: '/admin/invoices/$id'
+      preLoaderRoute: typeof AuthenticatedAdminInvoicesIdRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/enquiries/$id': {
@@ -483,6 +616,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCustomersIdRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/bookings/$id': {
+      id: '/_authenticated/admin/bookings/$id'
+      path: '/bookings/$id'
+      fullPath: '/admin/bookings/$id'
+      preLoaderRoute: typeof AuthenticatedAdminBookingsIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
@@ -490,20 +630,35 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminProfileRoute: typeof AuthenticatedAdminProfileRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminBookingsIdRoute: typeof AuthenticatedAdminBookingsIdRoute
   AuthenticatedAdminCustomersIdRoute: typeof AuthenticatedAdminCustomersIdRoute
   AuthenticatedAdminEnquiriesIdRoute: typeof AuthenticatedAdminEnquiriesIdRoute
+  AuthenticatedAdminInvoicesIdRoute: typeof AuthenticatedAdminInvoicesIdRoute
+  AuthenticatedAdminQuotationsIdRoute: typeof AuthenticatedAdminQuotationsIdRoute
+  AuthenticatedAdminBookingsIndexRoute: typeof AuthenticatedAdminBookingsIndexRoute
   AuthenticatedAdminCustomersIndexRoute: typeof AuthenticatedAdminCustomersIndexRoute
   AuthenticatedAdminEnquiriesIndexRoute: typeof AuthenticatedAdminEnquiriesIndexRoute
+  AuthenticatedAdminInvoicesIndexRoute: typeof AuthenticatedAdminInvoicesIndexRoute
+  AuthenticatedAdminPaymentsIndexRoute: typeof AuthenticatedAdminPaymentsIndexRoute
+  AuthenticatedAdminQuotationsIndexRoute: typeof AuthenticatedAdminQuotationsIndexRoute
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminProfileRoute: AuthenticatedAdminProfileRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminBookingsIdRoute: AuthenticatedAdminBookingsIdRoute,
   AuthenticatedAdminCustomersIdRoute: AuthenticatedAdminCustomersIdRoute,
   AuthenticatedAdminEnquiriesIdRoute: AuthenticatedAdminEnquiriesIdRoute,
+  AuthenticatedAdminInvoicesIdRoute: AuthenticatedAdminInvoicesIdRoute,
+  AuthenticatedAdminQuotationsIdRoute: AuthenticatedAdminQuotationsIdRoute,
+  AuthenticatedAdminBookingsIndexRoute: AuthenticatedAdminBookingsIndexRoute,
   AuthenticatedAdminCustomersIndexRoute: AuthenticatedAdminCustomersIndexRoute,
   AuthenticatedAdminEnquiriesIndexRoute: AuthenticatedAdminEnquiriesIndexRoute,
+  AuthenticatedAdminInvoicesIndexRoute: AuthenticatedAdminInvoicesIndexRoute,
+  AuthenticatedAdminPaymentsIndexRoute: AuthenticatedAdminPaymentsIndexRoute,
+  AuthenticatedAdminQuotationsIndexRoute:
+    AuthenticatedAdminQuotationsIndexRoute,
 }
 
 const AuthenticatedAdminRouteWithChildren =
