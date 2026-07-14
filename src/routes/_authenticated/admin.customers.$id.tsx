@@ -76,7 +76,7 @@ function CustomerDetail() {
   const { data: bookings } = useQuery({
     queryKey: ["customer-bookings", id],
     queryFn: async () => (await supabase.from("bookings")
-      .select("id, reference, status, service_type, travel_date, amount, currency")
+      .select("id, reference, status, service_type, travel_date, amount")
       .eq("customer_id", id).order("created_at", { ascending: false })).data ?? [],
   });
   const { data: invoices } = useQuery({
@@ -198,7 +198,7 @@ function CustomerDetail() {
                   <span className="font-mono text-xs text-muted-foreground w-32">{b.reference}</span>
                   <Badge variant="outline" className={`border text-xs ${statusTone(b.status)}`}>{BOOKING_STATUS[b.status]}</Badge>
                   <span className="flex-1 text-xs text-muted-foreground">{b.service_type ? SERVICE_LABELS[b.service_type as keyof typeof SERVICE_LABELS] : "—"} · {b.travel_date ?? "—"}</span>
-                  <span className="tabular-nums text-sm font-medium">{formatMoney(b.amount, b.currency)}</span>
+                  <span className="tabular-nums text-sm font-medium">{formatMoney(b.amount)}</span>
                 </Link>
               ))}
           </Card>
