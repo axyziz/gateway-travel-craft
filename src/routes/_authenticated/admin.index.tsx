@@ -35,6 +35,10 @@ function Dashboard() {
         supabase.from("invoices").select("id", { count: "exact", head: true }).in("status", ["draft", "pending"]),
         supabase.from("payments").select("amount").gte("payment_date", startOfDay.toISOString().slice(0, 10)),
       ]);
+      const { data: outstandingRows } = await supabase.from("invoices")
+        .select("total, amount_paid").in("status", ["draft", "pending"]);
+      const outstanding = (outstandingRows ?? []).reduce(
+        (s, r) => s + Math.max(0, Number(r.total ?? 0) - Number(r.amount_paid ?? 0)), 0);
       return {
         customers: customers.count ?? 0,
         today: today.count ?? 0,
@@ -45,6 +49,7 @@ function Dashboard() {
         bookConf: bookConf.count ?? 0,
         invPending: invPending.count ?? 0,
         todayRevenue: (todayPayments.data ?? []).reduce((s, p) => s + Number(p.amount), 0),
+        outstanding,
       };
     },
   });
@@ -145,6 +150,12 @@ function Dashboard() {
           <p className="mt-6 text-4xl font-semibold tracking-tight tabular-nums">
             {isLoading ? <Skeleton className="h-10 w-40" /> : formatMoney(stats?.todayRevenue ?? 0)}
           </p>
+          <div className="mt-6 pt-6 border-t border-border/60">
+            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Outstanding payments</p>
+            <p className="mt-1 text-2xl font-semibold tabular-nums text-amber-600 dark:text-amber-400">
+              {isLoading ? <Skeleton className="h-7 w-32" /> : formatMoney(stats?.outstanding ?? 0)}
+            </p>
+          </div>
         </Card>
         <Card className="p-6 border-border/60">
           <div className="flex items-center justify-between">
