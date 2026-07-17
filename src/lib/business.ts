@@ -76,3 +76,29 @@ export const computeTotals = (items: LineItem[], discount = 0, tax = 0) => {
   const total = Number(Math.max(0, subtotal - (discount || 0) + (tax || 0)).toFixed(2));
   return { subtotal, total };
 };
+
+// ---------- CSV export ----------
+const csvCell = (v: unknown): string => {
+  if (v == null) return "";
+  const s = v instanceof Date ? v.toISOString() : String(v);
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+};
+
+export function exportCsv<T extends Record<string, unknown>>(
+  filename: string,
+  rows: T[],
+  columns: { key: keyof T & string; label: string }[],
+) {
+  const header = columns.map((c) => csvCell(c.label)).join(",");
+  const body = rows.map((r) => columns.map((c) => csvCell(r[c.key])).join(",")).join("\n");
+  const csv = `${header}\n${body}`;
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename.endsWith(".csv") ? filename : `${filename}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}

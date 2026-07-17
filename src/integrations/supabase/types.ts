@@ -137,6 +137,60 @@ export type Database = {
           },
         ]
       }
+      company_settings: {
+        Row: {
+          address: string | null
+          booking_prefix: string
+          company_name: string
+          created_at: string
+          currency: string
+          email: string | null
+          gst_number: string | null
+          id: string
+          invoice_prefix: string
+          logo_url: string | null
+          phone: string | null
+          quotation_prefix: string
+          timezone: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          booking_prefix?: string
+          company_name?: string
+          created_at?: string
+          currency?: string
+          email?: string | null
+          gst_number?: string | null
+          id?: string
+          invoice_prefix?: string
+          logo_url?: string | null
+          phone?: string | null
+          quotation_prefix?: string
+          timezone?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          booking_prefix?: string
+          company_name?: string
+          created_at?: string
+          currency?: string
+          email?: string | null
+          gst_number?: string | null
+          id?: string
+          invoice_prefix?: string
+          logo_url?: string | null
+          phone?: string | null
+          quotation_prefix?: string
+          timezone?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       customers: {
         Row: {
           created_at: string

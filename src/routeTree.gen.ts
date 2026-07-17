@@ -27,6 +27,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminReportsRouteImport } from './routes/_authenticated/admin.reports'
 import { Route as AuthenticatedAdminProfileRouteImport } from './routes/_authenticated/admin.profile'
 import { Route as AuthenticatedAdminQuotationsIndexRouteImport } from './routes/_authenticated/admin.quotations.index'
 import { Route as AuthenticatedAdminPaymentsIndexRouteImport } from './routes/_authenticated/admin.payments.index'
@@ -130,6 +131,12 @@ const AuthenticatedAdminSettingsRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminReportsRoute =
+  AuthenticatedAdminReportsRouteImport.update({
+    id: '/reports',
+    path: '/reports',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminProfileRoute =
   AuthenticatedAdminProfileRouteImport.update({
     id: '/profile',
@@ -220,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/visa': typeof VisaRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/profile': typeof AuthenticatedAdminProfileRoute
+  '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/bookings/$id': typeof AuthenticatedAdminBookingsIdRoute
@@ -250,6 +258,7 @@ export interface FileRoutesByTo {
   '/vehicle-rental': typeof VehicleRentalRoute
   '/visa': typeof VisaRoute
   '/admin/profile': typeof AuthenticatedAdminProfileRoute
+  '/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/bookings/$id': typeof AuthenticatedAdminBookingsIdRoute
@@ -283,6 +292,7 @@ export interface FileRoutesById {
   '/visa': typeof VisaRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/profile': typeof AuthenticatedAdminProfileRoute
+  '/_authenticated/admin/reports': typeof AuthenticatedAdminReportsRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/bookings/$id': typeof AuthenticatedAdminBookingsIdRoute
@@ -316,6 +326,7 @@ export interface FileRouteTypes {
     | '/visa'
     | '/admin'
     | '/admin/profile'
+    | '/admin/reports'
     | '/admin/settings'
     | '/admin/'
     | '/admin/bookings/$id'
@@ -346,6 +357,7 @@ export interface FileRouteTypes {
     | '/vehicle-rental'
     | '/visa'
     | '/admin/profile'
+    | '/admin/reports'
     | '/admin/settings'
     | '/admin'
     | '/admin/bookings/$id'
@@ -378,6 +390,7 @@ export interface FileRouteTypes {
     | '/visa'
     | '/_authenticated/admin'
     | '/_authenticated/admin/profile'
+    | '/_authenticated/admin/reports'
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/bookings/$id'
@@ -539,6 +552,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/reports': {
+      id: '/_authenticated/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AuthenticatedAdminReportsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/profile': {
       id: '/_authenticated/admin/profile'
       path: '/profile'
@@ -628,6 +648,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminProfileRoute: typeof AuthenticatedAdminProfileRoute
+  AuthenticatedAdminReportsRoute: typeof AuthenticatedAdminReportsRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminBookingsIdRoute: typeof AuthenticatedAdminBookingsIdRoute
@@ -645,6 +666,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminProfileRoute: AuthenticatedAdminProfileRoute,
+  AuthenticatedAdminReportsRoute: AuthenticatedAdminReportsRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedAdminBookingsIdRoute: AuthenticatedAdminBookingsIdRoute,
