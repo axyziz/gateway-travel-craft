@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, Users, Inbox, Settings, User, LifeBuoy, FileText, Briefcase, Receipt, Wallet } from "lucide-react";
+import { LayoutDashboard, Users, Inbox, Settings, User, LifeBuoy, FileText, Briefcase, Receipt, Wallet, BarChart3 } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +23,10 @@ const NAV = [
       { to: "/admin/invoices", label: "Invoices", icon: Receipt },
       { to: "/admin/payments", label: "Payments", icon: Wallet },
     ],
+  },
+  {
+    label: "Insights",
+    items: [{ to: "/admin/reports", label: "Reports", icon: BarChart3 }],
   },
   {
     label: "Account",
