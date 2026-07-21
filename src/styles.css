@@ -191,6 +191,34 @@
   background: var(--gradient-primary);
 }
 
+@utility bg-gradient-gold {
+  background: var(--gradient-gold);
+}
+
+@utility text-gold {
+  color: var(--gold);
+}
+
+@utility bg-gold {
+  background-color: var(--gold);
+  color: var(--gold-foreground);
+}
+
+@utility bg-emerald {
+  background-color: var(--emerald);
+  color: var(--emerald-foreground);
+}
+
+@utility text-emerald {
+  color: var(--emerald);
+}
+
+@utility glass-card {
+  background: color-mix(in oklab, var(--background) 55%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
 @utility shadow-elegant {
   box-shadow: var(--shadow-elegant);
 }
