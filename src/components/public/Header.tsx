@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -33,12 +33,21 @@ export function PublicHeader() {
           ))}
         </nav>
         <div className="hidden md:flex items-center gap-2">
+        <a
+          href="https://wa.me/910000000000"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-emerald text-emerald-foreground hover:opacity-90 transition-opacity"
+          aria-label="Chat on WhatsApp"
+        >
+          <MessageCircle className="h-3.5 w-3.5" /> WhatsApp
+        </a>
           <Button asChild variant="ghost" size="sm">
             <Link to="/auth">Sign in</Link>
           </Button>
-          <Button asChild size="sm" className="bg-gradient-primary text-primary-foreground shadow-soft hover:opacity-95">
-            <Link to="/contact">
-              Get in touch <ArrowRight className="h-3.5 w-3.5" />
+        <Button asChild size="sm" className="bg-gradient-primary text-primary-foreground shadow-soft hover:opacity-95">
+          <Link to="/flight-quote">
+            Request a Quote <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </Button>
         </div>
