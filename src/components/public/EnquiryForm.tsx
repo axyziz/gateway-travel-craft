@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { submitEnquiry, SERVICE_LABELS, type ServiceType } from "@/lib/enquiries";
+import { AirportInput } from "@/components/public/AirportInput";
 
 type Props = { service: ServiceType };
 
@@ -188,8 +189,8 @@ function ServiceFields({ service }: { service: ServiceType }) {
       return (
         <>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Origin" required><Input name="origin" required placeholder="City or airport" /></Field>
-            <Field label="Destination" required><Input name="destination" required placeholder="City or airport" /></Field>
+            <Field label="From" required><AirportInput name="origin" required placeholder="City, airport or IATA" /></Field>
+            <Field label="To" required><AirportInput name="destination" required placeholder="City, airport or IATA" /></Field>
           </div>
           <Field label="Trip type">
             <RadioGroup name="trip_type" defaultValue="one_way" className="flex gap-4 pt-1">

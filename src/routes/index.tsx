@@ -2,22 +2,24 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
   ArrowRight, Plane, Hotel, Sparkles, Globe2, Car, Bus,
-  ShieldCheck, Zap, Layers, Clock, Star, Quote,
+  ShieldCheck, Zap, Layers, Clock, Star, Quote, Users, Award, MessageCircle,
 } from "lucide-react";
 import { PublicLayout } from "@/components/layouts/PublicLayout";
-import { PageHero } from "@/components/shared/PageHero";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import heroImage from "@/assets/hero-travel.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Gateway Travels — Enterprise Travel CRM & Concierge" },
-      { name: "description", content: "Premium travel services and an enterprise CRM in one workspace. Flights, hotels, holidays, visas, transport — coordinated end to end." },
-      { property: "og:title", content: "Gateway Travels — Enterprise Travel CRM & Concierge" },
-      { property: "og:description", content: "Premium travel services and an enterprise CRM in one workspace. Flights, hotels, holidays, visas, transport — coordinated end to end." },
+      { title: "Gateway Travels — Explore the World with Confidence" },
+      { name: "description", content: "Premium flights, hotels, visas, holidays, buses and vehicle rentals — planned by real specialists and delivered end to end." },
+      { property: "og:title", content: "Gateway Travels — Explore the World with Confidence" },
+      { property: "og:description", content: "Premium flights, hotels, visas, holidays, buses and vehicle rentals — planned by real specialists and delivered end to end." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Home,
@@ -64,18 +66,59 @@ const FAQS = [
 function Home() {
   return (
     <PublicLayout>
-      <PageHero
-        eyebrow="Gateway Travels"
-        title={<>Travel operations, <span className="text-gradient">reimagined</span>.</>}
-        description="A modern Travel CRM and premium concierge in one place. Flights, stays, visas and transport — coordinated by a team that treats every trip like their own."
-      >
-        <Button asChild size="lg" className="bg-gradient-primary text-primary-foreground shadow-elegant hover:opacity-95">
-          <Link to="/flight-quote">Request a flight quote <ArrowRight className="h-4 w-4" /></Link>
-        </Button>
-        <Button asChild size="lg" variant="outline">
-          <Link to="/holiday-packages">Explore holiday packages</Link>
-        </Button>
-      </PageHero>
+      {/* Cinematic hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={heroImage}
+            alt="Aerial view of a tropical island at sunset from an airplane window"
+            className="h-full w-full object-cover"
+            width={1920}
+            height={1200}
+            fetchPriority="high"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[oklch(0.15_0.06_260/0.55)] via-[oklch(0.18_0.06_260/0.4)] to-[oklch(0.15_0.06_260/0.85)]" />
+        </div>
+        <div className="relative container-page pt-28 pb-24 sm:pt-40 sm:pb-32 text-primary-foreground">
+          <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }} className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 rounded-full glass-card px-3 py-1 text-xs font-medium text-primary-foreground/90">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Trusted travel concierge since 2015
+            </span>
+            <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05]">
+              Explore the World with <span className="bg-gradient-gold bg-clip-text text-transparent">Confidence</span>.
+            </h1>
+            <p className="mt-6 text-lg sm:text-xl text-primary-foreground/80 max-w-2xl leading-relaxed">
+              Flights • Hotels • Visa • Holidays • Bus • Rentals — coordinated by a real team that treats every trip like their own.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Button asChild size="lg" className="bg-gradient-gold text-[color:var(--gold-foreground)] shadow-elegant hover:opacity-95">
+                <Link to="/flight-quote">Request a Quote <ArrowRight className="h-4 w-4" /></Link>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="bg-primary-foreground/10 border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/20 backdrop-blur">
+                <a href="https://wa.me/910000000000" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="h-4 w-4" /> WhatsApp Us
+                </a>
+              </Button>
+            </div>
+            {/* Trust badges */}
+            <div className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-3xl">
+              {[
+                { icon: Users, label: "10k+ Happy Travellers" },
+                { icon: Clock, label: "Fast Support" },
+                { icon: ShieldCheck, label: "Secure Booking" },
+                { icon: Award, label: "Best Prices" },
+              ].map((b) => (
+                <div key={b.label} className="glass-card rounded-2xl px-4 py-3 flex items-center gap-2.5 text-primary-foreground">
+                  <span className="grid place-items-center h-8 w-8 rounded-lg bg-gradient-gold text-[color:var(--gold-foreground)] shrink-0">
+                    <b.icon className="h-4 w-4" />
+                  </span>
+                  <p className="text-xs sm:text-sm font-medium">{b.label}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Why Gateway */}
       <section className="container-page py-20">
